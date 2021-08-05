@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
+use \Intervention\Image\Facades\Image;
 
 class PropertyController extends Controller
 {
@@ -44,19 +45,19 @@ class PropertyController extends Controller
         }
 
         if ($request->hasfile('file')) {
+            $first_image = 0;
             foreach ($request->file('file') as $file) {
                 $name = $file->getClientOriginalName();
                 $filename = pathinfo($name, PATHINFO_FILENAME);
                 $extension = pathinfo($name, PATHINFO_EXTENSION);
                 $name = md5(time() . $filename) . '.' . $extension;
-                $first_image = 0;
                 if ($file->move($path, $name)) {
                     if ($first_image == 0) {
-                        $img = \Intervention\Image\Facades\Image::make($path . '/' . $name);
+                        $img = Image::make($path . '/' . $name);
                         $img->resize(262, 166);
                         $img->save($path . '/' . $name);
                     } else {
-                        $img = \Intervention\Image\Facades\Image::make($path . '/' . $name);
+                        $img = Image::make($path . '/' . $name);
                         $img->resize(847, 424);
                         $img->save($path . '/' . $name);
                     }
