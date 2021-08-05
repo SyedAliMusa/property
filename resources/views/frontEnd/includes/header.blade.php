@@ -68,7 +68,7 @@
                         </ul>
                     </div><!--/.nav-collapse -->
                 </nav><!-- nav /- -->
-                <a title="Add Property" href="{{ route('addProperty') }}" class="pull-right">Add Property</a>
+                <a title="Add Property" href="{{ route('propertyForm') }}" class="pull-right">Add Property</a>
             </div><!-- Menu Block /- -->
         </div><!-- Navigation Block /- -->
         <div class="pull-right">

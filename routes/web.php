@@ -18,21 +18,29 @@ Route::get('/agent/register', function () {
     return view('frontEnd.views.Profile.register');
 })->name('signUp');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',
+    'App\Http\Controllers\frontEnd\Home\HomeController@index'
+);
 
-Route::get('/home', function () {
-    return view('frontEnd.views.home');
-})->name('home');
-
-Route::get('/', function () {
-    return view('frontEnd.views.home');
-})->name('home');
+Route::get('/home',
+    'App\Http\Controllers\frontEnd\Home\HomeController@index')
+    ->name('home');
 
 Route::get('/property/add', function () {
     return view('frontEnd.views.Property.add_property');
-})->name('addProperty');
+})->middleware(['auth'])->name('propertyForm');
+
+Route::post('/property/add',
+    'App\Http\Controllers\frontEnd\Property\PropertyController@add')
+    ->middleware(['auth'])->name('addProperty');
+
+Route::get('/property/show',
+    'App\Http\Controllers\frontEnd\Property\PropertyController@show')
+    ->middleware(['auth'])->name('showProperty');
+
+Route::get('/property/detail/{$id}',
+    'App\Http\Controllers\frontEnd\Property\PropertyController@show')
+    ->middleware(['auth'])->name('showProperty');
 
 /*Route::get('/home', function () {
     return view('frontEnd.views.home');

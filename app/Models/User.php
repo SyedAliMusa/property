@@ -41,4 +41,31 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function properties() {
+        return $this->hasMany(property::class);
+    }
+
+    public static function FeaturedUsers() {
+        return User::role('agent')
+            ->Active()
+            ->Featured()
+            ->Confirmed()
+            ->get();
+    }
+
+    public function scopeActive($query, $value = true)
+    {
+        return $query->where('is_active', $value);
+    }
+
+    public function scopeConfirmed($query, $value = true)
+    {
+        return $query->where('is_confirmed', $value);
+    }
+
+    public function scopeFeatured($query, $value = true )
+    {
+        return $query->where('is_feature', $value);
+    }
 }

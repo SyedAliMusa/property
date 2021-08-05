@@ -10,12 +10,12 @@
 		return false;
 	});
 
-	/* Event - Document Ready /- */	
+	/* Event - Document Ready /- */
 	$(document).ready( function($) {
-		
+
 		/* Expanding Search */
 		var uisearch = new UISearch( document.getElementById( 'sb-search' ) );
-		
+
 		/* Sticky Navigation */
 		var stickyNavTop = $('#top').offset().top;
 		var scrollTop = $(window).scrollTop();
@@ -24,11 +24,11 @@
 			if ( scrollTop > stickyNavTop ) {
 				$('.header').addClass('navbar-fixed-top animated fadeInDown');
 			} else {
-				$('.header').removeClass('navbar-fixed-top animated fadeInDown'); 
+				$('.header').removeClass('navbar-fixed-top animated fadeInDown');
 			}
 		};
 		stickyNav();
-		
+
 		/* Event - Window Scroll */
 		$(window).scroll(function() {
 
@@ -56,7 +56,7 @@
 			{
 				if( $(anchor.attr('href')).length )
 				{
-					$('html, body').stop().animate( { scrollTop: $(anchor.attr('href')).offset().top - 72 }, 1500, 'easeInOutExpo' );					
+					$('html, body').stop().animate( { scrollTop: $(anchor.attr('href')).offset().top - 72 }, 1500, 'easeInOutExpo' );
 				}
 				event.preventDefault();
 			}
@@ -71,7 +71,7 @@
 			{
 				if( $(anchor.attr('href')).length )
 				{
-					$('html, body').stop().animate( { scrollTop: $(anchor.attr('href')).offset().top - 150 }, 1500, 'easeInOutExpo' );			
+					$('html, body').stop().animate( { scrollTop: $(anchor.attr('href')).offset().top - 150 }, 1500, 'easeInOutExpo' );
 				}
 				event.preventDefault();
 			}
@@ -88,10 +88,10 @@
 				$('.featured-section .featured-box').addClass('animated slideInLeft');
 			});
 		});
-		
+
 		/* Rent Property */
 		if( $('#rent-property-block').length ) {
-			
+
 			$("#rent-property-block").owlCarousel(
 			{
 				autoPlay: 3000, //Set AutoPlay to 3 seconds
@@ -104,10 +104,10 @@
 				pagination: false
 			});
 		}
-		
+
 		/* Sale Property */
 		if( $('#sale-property-block').length ) {
-			
+
 			$("#sale-property-block").owlCarousel(
 			{
 				autoPlay: 3000, //Set AutoPlay to 3 seconds
@@ -120,10 +120,10 @@
 				pagination: false
 			});
 		}
-		
+
 		/* Featured Property */
 		if( $('#featured-property').length ) {
-			
+
 			$("#featured-property").owlCarousel(
 			{
 				autoPlay: 3000, //Set AutoPlay to 3 seconds
@@ -136,7 +136,7 @@
 				pagination: false
 			});
 		}
-		
+
 		/* Featured Property */
 		if( $('#business-partner').length ) {
 
@@ -151,10 +151,10 @@
 				pagination: false
 			});
 		}
-		
+
 		/* rent-and-sale-one-row */
 		if( $('#rent-and-sale-one-row').length ) {
-			
+
 			$("#rent-and-sale-one-row").owlCarousel(
 			{
 				autoPlay: 3000, //Set AutoPlay to 3 seconds
@@ -164,12 +164,12 @@
 				pagination: false
 			});
 		}
-		
+
 		/* gMAP */
 		$("#gmap").gMap({
 			controls: false,
 			scrollwheel: true,
-			
+
 			markers: [
 				{
 					latitude: 47.670553,
@@ -195,7 +195,7 @@
 				}
 			],
 			icon: {
-				image: "images/map-marker.png", 
+				image: "images/map-marker.png",
 				iconsize: [26, 46],
 				iconanchor: [12, 46]
 			},
@@ -203,13 +203,13 @@
 			longitude: 9.473413,
 			zoom: 10
 		});
-		
+
 		/* gMAP */
 		$("a[href='#add_location']").on('click', function(e) {
 			$("#gmap2").gMap({
 				controls: false,
 				scrollwheel: true,
-				
+
 				markers: [
 					{
 						latitude: 47.670553,
@@ -235,7 +235,7 @@
 					}
 				],
 				icon: {
-					image: "images/map-marker.png", 
+					image: "images/map-marker.png",
 					iconsize: [26, 46],
 					iconanchor: [12, 46]
 				},
@@ -244,26 +244,26 @@
 				zoom: 10
 			});
 		});
-		
+
 		/* Checkbox */
 		 $('input').iCheck({
 			checkboxClass: 'icheckbox_minimal',
 			radioClass: 'iradio_minimal',
 			increaseArea: '20%' // optional
 		});
-		
+
 		/* Contact Form */
 		$( "#btn_smt" ).on( "click", function(event) {
 		  event.preventDefault();
 		  var mydata = $("form").serialize();
-		  
+
 			$.ajax({
 				type: "POST",
 				dataType: "json",
 				url: "quick-contact.php",
 				data: mydata,
 				success: function(data) {
-					
+
 					if( data["type"] == "error" ){
 						$("#alert-msg").html(data["msg"]);
 						$("#alert-msg").removeClass("alert-msg-success");
@@ -272,11 +272,11 @@
 					} else {
 						$("#alert-msg").html(data["msg"]);
 						$("#alert-msg").addClass("alert-msg-success");
-						$("#alert-msg").removeClass("alert-msg-failure");					
+						$("#alert-msg").removeClass("alert-msg-failure");
 						$("#input_name").val("");
 						$("#input_email").val("");
 						$("#textarea_message").val("");
-						$("#alert-msg").show();						
+						$("#alert-msg").show();
 					}
 
 				},
@@ -285,28 +285,41 @@
 				}
 			});
 			return false;
-			
+
 		});/* Contact Form /- */
-				
+
 		$('body').on('click', '#add-item', function(event){
 			event.preventDefault();
 			$( ".submit-property .contact-feedback-form form" ).append( '<div class="input-group"><div class="col-md-4 col-sm-4"><input type="text" name="add-title3" placeholder="Title"></div><div class="col-md-7 col-sm-7"><input type="text" name="add-value3" placeholder="Value"></div><a href="#"><i class="fa fa-times-circle"></i></a></div>' );
 			$( ".no-additional-details" ).remove();
 		});
-		
-		$('body').on('click', '.submit-property .contact-feedback-form form .input-group a', function(event){
+
+        $('body').on('click', '#add-file', function(event){
+            event.preventDefault();
+            $( "#file-location" ).append( '<div class="kkk"> <div class="col-md-8"> <input type="file" name="file[]" placeholder="Value"> </div><div class="col-md-4">\n' +
+                '                                                <a href="#"><i class="fa fa-times-circle"></i></a>\n' +
+                '                                            </div></div></div>' );
+            $( ".no-additional-details" ).remove();
+        });
+
+		$('body').on('click', '#file-location .kkk .col-md-4 a', function(event){
 			event.preventDefault();
-			$($(this).parent()).remove();			
+			$($(this).parent().parent()).remove();
 		});
-		
-		
-	});	/* document.ready /- */	
-	
+
+        $('body').on('click', '.submit-property .contact-feedback-form form .input-group a', function(event){
+            event.preventDefault();
+            $($(this).parent()).remove();
+        });
+
+
+	});	/* document.ready /- */
+
 	if (!$('html').is('.ie6, .ie7, .ie8'))
 	{
 		/* Event - Window Load */
 		$(window).load(function()
-		{		
+		{
 			/* Loader */
 			$("#site-loader").delay(1000).fadeOut("slow");
 		});
@@ -316,5 +329,5 @@
 	{
 		$("#site-loader").css('display','none');
 	}
-	
+
 })(jQuery);

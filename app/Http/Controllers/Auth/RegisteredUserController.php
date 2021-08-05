@@ -52,16 +52,6 @@ class RegisteredUserController extends Controller
 
         $user->save();
 
-
-/*        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'mobile' => $request->mobile,
-            'telephone' => $request->telephone,
-            'bio' => $request->bio,
-        ]);*/
-
         $user->assignRole('agent');
 
         event(new Registered($user));
