@@ -2,7 +2,7 @@
 <!-- LOADER -->
 <div id="site-loader" class="load-complete">
     <div class="load-position">
-        <div class="logo logo-block"><a href="index.html"><img src="{{ asset('frontEnd') }}/images/logo.png" alt="logo" /></a></div>
+        <div class="logo logo-block"><a href="{{ route('home') }}"><img src="{{ asset('frontEnd') }}/images/logo.png" alt="logo" /></a></div>
         <h6>Please wait, loading...</h6>
         <div class="loading">
             <div class="loading-line"></div>
@@ -37,7 +37,7 @@
         <div class="navigation-block">
             <!-- Logo Block -->
             <div class="col-md-2 logo-block no-padding">
-                <a title="logo" href="index.html"><img src="{{ asset('frontEnd') }}/images/logo.png" alt="logo" /></a>
+                <a title="logo" href="{{ route('home') }}"><img src="{{ asset('frontEnd') }}/images/logo.png" alt="logo" /></a>
             </div><!-- Logo Block /- -->
             <!-- Menu Block -->
             <div class="col-md-10 menu-block">
@@ -54,12 +54,12 @@
                     <div class="navbar-collapse collapse" id="navbar">
                         <ul class="nav navbar-nav">
                             <li><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="#">Listing</a></li>
-                            <li><a href="#">Property</a></li>
+                            <li><a href="{{ route('propertyList') }}">Listing</a></li>
                             <li><a href="#">Blog</a></li>
-                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="{{ route('contactUs') }}">Contact Us</a></li>
                             @if (Route::has('login'))
                                 @auth
+                                    <li><a href="{{ route('myPropertyList') }}">My Listing</a></li>
                                 @else
                                     <li><a href="#">Sign in</a></li>
                                     <li><a href="{{ route('signUp') }}">Sign Up</a></li>

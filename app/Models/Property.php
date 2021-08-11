@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class property extends Model
+class Property extends Model
 {
     use HasFactory;
 
@@ -15,32 +15,55 @@ class property extends Model
     }
 
     public function propertyImages() {
-        return $this->hasMany(propertyImages::class)
+        return $this->hasMany(PropertyImages::class)
             ->where('is_deleted', '=', false);
     }
 
     public function propertyFeatures() {
-        return $this->hasMany(propertyFeatures::class);
+        return $this->hasMany(PropertyFeatures::class);
     }
 
-    public static function PropertyFeatured() {
-        return property::with(['user', 'propertyImages', 'propertyFeatures'])
+    public static function PropertyFeatured($limit) {
+        return Property::with(['user', 'propertyImages', 'propertyFeatures'])
             ->Active()
             ->Featured()
             ->Sold()
             ->Pending()
             ->Deleted()
+            ->latest()->take($limit)
             ->get();
     }
 
-    public static function Property($val) {
-        return property::with(['user', 'propertyImages', 'propertyFeatures'])
+    public static function Property($val, $limit) {
+        return Property::with(['user', 'propertyImages', 'propertyFeatures'])
                 ->where('type',$val)
                 ->Active()
                 ->Sold()
                 ->Pending()
                 ->Deleted()
+                ->latest()->take($limit)
                 ->get();
+    }
+
+    public static function LastThreeProperty() {
+        return Property::with(['user', 'propertyImages', 'propertyFeatures'])
+            ->Active()
+            ->Sold()
+            ->Pending()
+            ->Deleted()
+            ->latest()->take(3)
+            ->get();
+    }
+
+    public static function LastThreeFeaturedProperty($limit = 3) {
+        return Property::with(['user', 'propertyImages', 'propertyFeatures'])
+            ->Active()
+            ->Featured()
+            ->Sold()
+            ->Pending()
+            ->Deleted()
+            ->latest()->take($limit)
+            ->get();
     }
 
     public function scopeActive($query, $value = true)

@@ -31,6 +31,8 @@ class CreatePropertiesTable extends Migration
             $table->string('area_unit');
             $table->string('address');
             $table->string('video_url');
+            $table->string('featured_image');
+            $table->string('home_image');
             $table->boolean('is_active')->default(true);
             $table->boolean('is_featured')->default(false);
             $table->boolean('is_sold')->default(false);

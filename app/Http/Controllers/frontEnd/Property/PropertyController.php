@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\frontEnd\Property;
 
 use App\Http\Controllers\Controller;
-use App\Models\property;
-use App\Models\propertyFeatures;
-use App\Models\propertyImages;
+use App\Models\Property;
+use App\Models\PropertyFeatures;
+use App\Models\PropertyImages;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +19,38 @@ class PropertyController extends Controller
         if ($request->garage == 'true') {
             $garage = true;
         }
-        $property = new property();
+
+        $path = public_path() . '/PropertyImages/Sale';
+        if ($request->status == 'Rent') {
+            $path = public_path() . '/PropertyImages/Rent';
+        }
+
+        if ($request->hasfile('featureImage')) {
+            $fName = $request->file('featureImage')->getClientOriginalName();
+            $fileNameF = pathinfo($fName, PATHINFO_FILENAME);
+            $extensionF = pathinfo($fName, PATHINFO_EXTENSION);
+            $fName = md5(time() . $fileNameF) . '.' . $extensionF;
+            if ($request->file('featureImage')->move($path, $fName)) {
+                $img = Image::make($path . '/' . $fName);
+                $img->resize(85, 64);
+                $img->save($path . '/' . $fName);
+            }
+        }
+
+        if ($request->hasfile('homeImage')) {
+            $hName = $request->file('homeImage')->getClientOriginalName();
+            $fileNameH = pathinfo($hName, PATHINFO_FILENAME);
+            $extensionH = pathinfo($hName, PATHINFO_EXTENSION);
+            $hName = md5(time() . $fileNameH) . '.' . $extensionH;
+            if ($request->file('homeImage')->move($path, $hName)) {
+                $img = Image::make($path . '/' . $hName);
+                $img->resize(262, 166);
+                $img->save($path . '/' . $hName);
+            }
+        }
+
+
+        $property = new Property();
 
         $property->property_id = $request->propertyId;
         $property->agent_id = Auth::id();
@@ -37,42 +68,36 @@ class PropertyController extends Controller
         $property->area_unit = $request->unit;
         $property->address = $request->address;
         $property->video_url = $request->videoUrl;
+        $property->featured_image =$fName;
+        $property->home_image = $hName;
         $property->save();
 
-        $path = public_path() . '/PropertyImages/Sale';
-        if ($property->status == 'Rent') {
-            $path = public_path() . '/PropertyImages/Rent';
-        }
+//        $path = public_path() . '/PropertyImages/Sale';
+//        if ($property->status == 'Rent') {
+//            $path = public_path() . '/PropertyImages/Rent';
+//        }
 
         if ($request->hasfile('file')) {
-            $first_image = 0;
             foreach ($request->file('file') as $file) {
                 $name = $file->getClientOriginalName();
                 $filename = pathinfo($name, PATHINFO_FILENAME);
                 $extension = pathinfo($name, PATHINFO_EXTENSION);
                 $name = md5(time() . $filename) . '.' . $extension;
                 if ($file->move($path, $name)) {
-                    if ($first_image == 0) {
-                        $img = Image::make($path . '/' . $name);
-                        $img->resize(262, 166);
-                        $img->save($path . '/' . $name);
-                    } else {
-                        $img = Image::make($path . '/' . $name);
-                        $img->resize(847, 424);
-                        $img->save($path . '/' . $name);
-                    }
-                    $image = new propertyImages();
+                    $img = Image::make($path . '/' . $name);
+                    $img->resize(847, 424);
+                    $img->save($path . '/' . $name);
+                    $image = new PropertyImages();
                     $image->property_id = $property->id;
                     $image->image_name = $name;
                     $image->save();
-                    $first_image++;
                 }
             }
         }
 
         if ($request->has('features')) {
             foreach ($request->features as $fea) {
-                $feature = new propertyFeatures();
+                $feature = new PropertyFeatures();
                 $feature->property_id = $property->id;
                 $feature->features = $fea;
                 $feature->save();
@@ -83,15 +108,26 @@ class PropertyController extends Controller
     }
 
     public function show() {
-        $propertySale = property::Property('Sale');
-        $propertyRent = property::Property('Rent');
-        $propertyFeatured = property::PropertyFeatured();
-        $users  = User::FeaturedUsers();
-        echo count($users);
+
+        $list =  Property::with(['user', 'propertyImages', 'propertyFeatures'])->Active()
+            ->Sold()
+            ->Pending()
+            ->Deleted()
+            ->simplePaginate(2);
+        $latest = Property::LastThreeFeaturedProperty(6);
+        return view('frontEnd.views.Property.property_list', compact('list', 'latest'));
     }
 
-    public function getProperty($id) {
-        $property = property::with(['user', 'propertyImages', 'propertyFeatures'])
-                    ->where($id)->first();
+    public function getProperty(Property $property) {
+        $latest = Property::LastThreeProperty();
+        $path = 'Sale';
+        if ($property->type == 'Rent') {
+            $path = 'Rent';
+        }
+        return view('frontEnd.views.Property.property_detail', compact('property', 'path', 'latest'));
+    }
+
+    public function agent($id) {
+        echo $id;
     }
 }

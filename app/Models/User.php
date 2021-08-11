@@ -43,14 +43,15 @@ class User extends Authenticatable
     ];
 
     public function properties() {
-        return $this->hasMany(property::class);
+        return $this->hasMany(Property::class);
     }
 
-    public static function FeaturedUsers() {
+    public static function FeaturedUsers($limit) {
         return User::role('agent')
             ->Active()
             ->Featured()
             ->Confirmed()
+            ->latest()->take(3)
             ->get();
     }
 

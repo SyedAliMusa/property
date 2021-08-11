@@ -4,7 +4,7 @@
     <div class="page-content">
         <!-- Banner Section -->
         <div id="page-banner-section" class="page-banner-section container-fluid p_z">
-            <img src="{{ asset('frontEnd') }}/images/aa-listing/banner.jpg" alt="banner">
+            <img src="{{ asset('frontEnd') }}/banner/propertyDetailBanner.jpg" alt="banner">
             <!-- Banner Inner -->
             <div class="page-title">
                 <div class="container ">
@@ -58,7 +58,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <select name="type">
+                                        <select name="type" required>
                                             <option  value="" disabled selected>Type (select)</option>
                                             <option>Luxurious</option>
                                             <option>bungalow</option>
@@ -121,19 +121,17 @@
                             </div><!-- submit-property-1/- -->
                             <div role="tabpanel" class="tab-pane" id="property_images">
                                 <div class="contact-feedback-form">
-                                <!-- Drop Zone -->
-                                    <div class="col-md-6 droparea">
-                                        <div class="col-md-12"  id="file-location">
-                                            <div class="kkk">
-                                                <div class="col-md-8">
-                                                    <input type="file" name="file[]" placeholder="Value">
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <a href="#"><i class="fa fa-times-circle"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <a href="#" title="Next Step" id="add-file" class="next-step">Add More</a>
+                                    <div class="col-md-10" style="margin-bottom: 1%">Featured Image | Recommended size 85x64</div>
+                                    <div class="col-md-10" style="margin-bottom: 5%">
+                                        <input type="file" required name="featureImage" placeholder="Value">
+                                    </div>
+                                    <div class="col-md-10" style="margin-bottom: 1%">Home Page Image | Recommended size 262x166</div>
+                                    <div class="col-md-10" style="margin-bottom: 5%">
+                                        <input type="file" required name="homeImage" placeholder="Value">
+                                    </div>
+                                    <div class="col-md-10" style="margin-bottom: 1%">Add Multiple Images | Recommended size 847x424</div>
+                                    <div class="col-md-10">
+                                        <input type="file" required name="file[]" placeholder="Value" multiple>
                                     </div>
                                 </div>
                             </div><!-- submit-property-2/- -->
@@ -264,7 +262,7 @@
                             <div role="tabpanel" class="tab-pane" id="add_location">
                                 <div class="contact-feedback-form">
                                     <div class="col-md-10 col-sm-9 col-xs-12 p_z">
-                                        <input type="text"  name="address" id="address" placeholder="Address">
+                                        <input type="text" required  name="address" id="address" placeholder="Address">
                                     </div>
                                     <div class="col-md-2 col-sm-3 col-xs-12 p_r_z">
                                         <button class="btn">Find Address</button>

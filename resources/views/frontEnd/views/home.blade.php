@@ -8,57 +8,46 @@
             <div id="property-slider" class="carousel slide slider-section" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
-                    <li data-target="#property-slider" data-slide-to="0" class="active"><img src="{{ asset('frontEnd') }}/images/slider/slide-1.jpg" alt="Slide 1"></li>
-                    <li data-target="#property-slider" data-slide-to="1"><img src="{{ asset('frontEnd') }}/images/slider/slide-2.jpg" alt="Slide 2"></li>
-                    <li data-target="#property-slider" data-slide-to="2"><img src="{{ asset('frontEnd') }}/images/slider/slide-1.jpg" alt="Slide 1"></li>
-                    <li data-target="#property-slider" data-slide-to="3"><img src="{{ asset('frontEnd') }}/images/slider/slide-2.jpg" alt="Slide 2"></li>
+                    <li data-target="#property-slider" data-slide-to="0" class="active"><img src="{{ asset('frontEnd') }}/images/slider/header.png" alt="Slide 1"></li>
+                    <li data-target="#property-slider" data-slide-to="1"><img src="{{ asset('frontEnd') }}/images/slider/header.png" alt="Slide 2"></li>
+                    <li data-target="#property-slider" data-slide-to="2"><img src="{{ asset('frontEnd') }}/images/slider/header.png" alt="Slide 1"></li>
+{{--                    <li data-target="#property-slider" data-slide-to="3"><img src="{{ asset('frontEnd') }}/images/slider/slide-2.jpg" alt="Slide 2"></li>--}}
                 </ol>
 
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
-                        <img src="{{ asset('frontEnd') }}/images/slider/slide-1.jpg" alt="Slide 1">
-                        <div class="carousel-caption">
+                        <img src="{{ asset('frontEnd') }}/images/slider/header.png" alt="Slide 1">
+                        {{--<div class="carousel-caption">
                             <div class="slider-content">
                                 <h4>$480,000 </h4>
                                 <h3>Florida 5, Pinecrest, FL</h3>
                                 <p>Lorem ipsum our Latest listed properties and check out the facilities on</p>
                                 <a href="#" title="caption-arrow" class="caption-arrow"><i class="fa fa-long-arrow-right"></i></a>
                             </div>
-                        </div>
+                        </div>--}}
                     </div>
                     <div class="item">
-                        <img src="{{ asset('frontEnd') }}/images/slider/slide-2.jpg" alt="Slide 2">
-                        <div class="carousel-caption">
+                        <img src="{{ asset('frontEnd') }}/images/slider/header.png" alt="Slide 2">
+                        {{--<div class="carousel-caption">
                             <div class="slider-content">
                                 <h4>$480,000 </h4>
                                 <h3>Florida 5, Pinecrest, FL</h3>
                                 <p>Lorem ipsum our Latest listed properties and check out the facilities on</p>
                                 <a href="#" title="caption-arrow" class="caption-arrow"><i class="fa fa-long-arrow-right"></i></a>
                             </div>
-                        </div>
+                        </div>--}}
                     </div>
                     <div class="item">
-                        <img src="{{ asset('frontEnd') }}/images/slider/slide-1.jpg" alt="Slide 1">
-                        <div class="carousel-caption">
+                        <img src="{{ asset('frontEnd') }}/images/slider/header.png" alt="Slide 3">
+                        {{--<div class="carousel-caption">
                             <div class="slider-content">
                                 <h4>$480,000 </h4>
                                 <h3>Florida 5, Pinecrest, FL</h3>
                                 <p>Lorem ipsum our Latest listed properties and check out the facilities on</p>
                                 <a href="#" title="caption-arrow" class="caption-arrow"><i class="fa fa-long-arrow-right"></i></a>
                             </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="{{ asset('frontEnd') }}/images/slider/slide-2.jpg" alt="Slide 2">
-                        <div class="carousel-caption">
-                            <div class="slider-content">
-                                <h4>$480,000 </h4>
-                                <h3>Florida 5, Pinecrest, FL</h3>
-                                <p>Lorem ipsum our Latest listed properties and check out the facilities on</p>
-                                <a href="#" title="caption-arrow" class="caption-arrow"><i class="fa fa-long-arrow-right"></i></a>
-                            </div>
-                        </div>
+                        </div>--}}
                     </div>
                 </div>
 
@@ -185,7 +174,7 @@
                     </div>
                     <div class="col-md-9 p_r_z">
                         <div id="rent-property-block" class="rent-property-block">
-                            @if(isset($propertyRent) && !empty($propertyRent))
+                            @if(isset($propertyRent) && $propertyRent != null)
                                 @foreach($propertyRent as $property)
                                     <div class="item">
                                         <!-- col-md-12 -->
@@ -193,16 +182,12 @@
                                             <!-- Property Main Box -->
                                             <div class="property-main-box">
                                                 <div class="property-images-box">
-                                                    @if(empty($property->propertyImages))
-                                                        <a title="Property Image" href="#"><img src="{{ asset('frontEnd') }}/images/rent/rent-1.jpg" alt="rent" /></a>
-                                                    @else
-                                                        <a title="Property Image" href="#"><img src="{{ asset('PropertyImages') }}/Rent/{{ $property->propertyImages[0]->image_name }}" alt="rent" /></a>
-                                                    @endif
-                                                    <h4>{{ $property->price }} / pm</h4>
+                                                    <a title="Property Image" href="{{ route('showProperty', $property->id) }}"><img src="{{ fileExist262($property->type, $property->home_image) }}" alt="rent" /></a>
+                                                    <h4>{{ $property->price }}/pm</h4>
                                                 </div>
                                                 <div class="clearfix"></div>
                                                 <div class="property-details">
-                                                    <a title="Property Title" href="#">{{ $property->title }}</a>
+                                                    <a title="Property Title" href="{{ route('showProperty', $property->id) }}">{{ $property->title }}</a>
                                                     <ul>
                                                         <li><i class="fa fa-expand"></i>{{ $property->area }} {{ $property->area_unit }}</li>
                                                         <li><i><img src="{{ asset('frontEnd') }}/images/icon/bed-icon.png" alt="bed-icon" /></i>{{ $property->bedrooms }}</li>
@@ -213,6 +198,31 @@
                                         </div><!-- col-md-12 /- -->
                                     </div>
                                 @endforeach
+                            @else
+                                @for($i = 0; $i < 6; $i++)
+                                    <div class="item">
+                                    <!-- Col-md-12 -->
+                                    <div class="col-md-12 rent-block">
+                                        <!-- Property Main Box -->
+                                        <div class="property-main-box">
+                                            <div class="property-images-box">
+                                                <span>R</span>
+                                                <a title="Property Image" href="#"><img src="images/featured/featured-1.jpg" alt="featured" /></a>
+                                                <h4>&dollar;380 / pm</h4>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="property-details">
+                                                <a title="Property Title" href="#">For Rent Dummy</a>
+                                                <ul>
+                                                    <li><i class="fa fa-expand"></i>3326 sq</li>
+                                                    <li><i><img src="images/icon/bed-icon.png" alt="bed-icon" /></i>3</li>
+                                                    <li><i><img src="images/icon/bath-icon.png" alt="bath-icon" /></i>2</li>
+                                                </ul>
+                                            </div>
+                                        </div><!-- Property Main Box /- -->
+                                    </div><!-- Col-md-12 -->
+                                </div>
+                                @endfor
                             @endif
                         </div>
                     </div>
@@ -228,93 +238,56 @@
                     </div>
                     <div class="col-md-9 p_r_z">
                         <div id="sale-property-block" class="sale-property-block">
-                            <div class="item">
-                                <!-- col-md-12 -->
-                                <div class="col-md-12 sale-block">
-                                    <!-- Property Main Box -->
-                                    <div class="property-main-box">
-                                        <div class="property-images-box">
-                                            <a title="Property Image" href="#"><img src="{{ asset('frontEnd') }}/images/rent/rent-1.jpg" alt="rent" /></a>
-                                            <h4>&dollar;380000</h4>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <div class="property-details">
-                                            <a title="Property Title" href="#">Southwest 39th Terrace</a>
-                                            <ul>
-                                                <li><i class="fa fa-expand"></i>3326 sq</li>
-                                                <li><i><img src="{{ asset('frontEnd') }}/images/icon/bed-icon.png" alt="bed-icon" /></i>3</li>
-                                                <li><i><img src="{{ asset('frontEnd') }}/images/icon/bath-icon.png" alt="bath-icon" /></i>2</li>
-                                            </ul>
-                                        </div>
-                                    </div><!-- Property Main Box /- -->
-                                </div><!-- Col-md-12 /- -->
-                            </div>
-
-                            <div class="item">
-                                <!-- Col-md-12 -->
-                                <div class="col-md-12 sale-block">
-                                    <!-- Property Main Box -->
-                                    <div class="property-main-box">
-                                        <div class="property-images-box">
-                                            <a title="Property Image" href="#"><img src="{{ asset('frontEnd') }}/images/rent/rent-2.jpg" alt="rent" /></a>
-                                            <h4>&dollar;330000</h4>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <div class="property-details">
-                                            <a title="Property Title" href="#">20 Apartments of Type A</a>
-                                            <ul>
-                                                <li><i class="fa fa-expand"></i>3326 sq</li>
-                                                <li><i><img src="{{ asset('frontEnd') }}/images/icon/bed-icon.png" alt="bed-icon" /></i>3</li>
-                                                <li><i><img src="{{ asset('frontEnd') }}/images/icon/bath-icon.png" alt="bath-icon" /></i>2</li>
-                                            </ul>
-                                        </div>
-                                    </div><!-- Property Main Box /- -->
-                                </div><!-- Col-md-12 /- -->
-                            </div>
-
-                            <div class="item">
-                                <!-- Col-md-12 -->
-                                <div class="col-md-12 sale-block">
-                                    <!-- Property Main Box -->
-                                    <div class="property-main-box">
-                                        <div class="property-images-box">
-                                            <a title="Property Image" href="#"><img src="{{ asset('frontEnd') }}/images/rent/rent-3.jpg" alt="rent" /></a>
-                                            <h4>&dollar;350000</h4>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <div class="property-details">
-                                            <a title="Property Title" href="#">15 Apartments of Type B</a>
-                                            <ul>
-                                                <li><i class="fa fa-expand"></i>3326 sq</li>
-                                                <li><i><img src="{{ asset('frontEnd') }}/images/icon/bed-icon.png" alt="bed-icon" /></i>3</li>
-                                                <li><i><img src="{{ asset('frontEnd') }}/images/icon/bath-icon.png" alt="bath-icon" /></i>2</li>
-                                            </ul>
-                                        </div>
-                                    </div><!-- Property Main Box -->
-                                </div><!-- col-md-12 -->
-                            </div>
-
-                            <div class="item">
-                                <!-- col-md-12 -->
-                                <div class="col-md-12 sale-block">
-                                    <!-- Property Main Box -->
-                                    <div class="property-main-box">
-                                        <div class="property-images-box">
-                                            <a title="Property Image" href="#"><img src="{{ asset('frontEnd') }}/images/rent/rent-1.jpg" alt="rent" /></a>
-                                            <h4>&dollar;380 / pm</h4>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <div class="property-details">
-                                            <a title="Property Title" href="#">Southwest 39th Terrace</a>
-                                            <ul>
-                                                <li><i class="fa fa-expand"></i>3326 sq</li>
-                                                <li><i><img src="{{ asset('frontEnd') }}/images/icon/bed-icon.png" alt="bed-icon" /></i>3</li>
-                                                <li><i><img src="{{ asset('frontEnd') }}/images/icon/bath-icon.png" alt="bath-icon" /></i>2</li>
-                                            </ul>
-                                        </div>
-                                    </div><!-- Property Main Box /- -->
+                            @if(isset($propertySale) && $propertySale != null)
+                                @foreach($propertySale as $property)
+                                    <div class="item">
+                                        <!-- col-md-12 -->
+                                        <div class="col-md-12 sale-block">
+                                            <!-- Property Main Box -->
+                                            <div class="property-main-box">
+                                                <div class="property-images-box">
+                                                    <a title="Property Image" href="{{ route('showProperty', $property->id) }}"><img src="{{ fileExist262($property->type, $property->home_image) }}" alt="rent" /></a>
+                                                    <h4>{{ $property->price }}</h4>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="property-details">
+                                                    <a title="Property Title" href="{{ route('showProperty', $property->id) }}">{{ $property->title }}</a>
+                                                    <ul>
+                                                        <li><i class="fa fa-expand"></i>{{ $property->area }} {{ $property->area_unit }}</li>
+                                                        <li><i><img src="{{ asset('frontEnd') }}/images/icon/bed-icon.png" alt="bed-icon" /></i>{{ $property->bedrooms }}</li>
+                                                        <li><i><img src="{{ asset('frontEnd') }}/images/icon/bath-icon.png" alt="bath-icon" /></i>{{ $property->bathrooms }}</li>
+                                                    </ul>
+                                                </div>
+                                            </div><!-- Property Main Box /- -->
+                                        </div><!-- Col-md-12 /- -->
+                                    </div>
+                                @endforeach
+                            @else
+                                @for($i = 0; $i < 6; $i++)
+                                    <div class="item">
+                                    <!-- Col-md-12 -->
+                                    <div class="col-md-12 sale-block">
+                                        <!-- Property Main Box -->
+                                        <div class="property-main-box">
+                                            <div class="property-images-box">
+                                                <span>S</span>
+                                                <a title="Property Image" href="#"><img src="images/featured/featured-4.jpg" alt="featured" /></a>
+                                                <h4>&dollar;380000</h4>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="property-details">
+                                                <a title="Property Title" href="#">For Sale Dummy</a>
+                                                <ul>
+                                                    <li><i class="fa fa-expand"></i>3326 sq</li>
+                                                    <li><i><img src="images/icon/bed-icon.png" alt="bed-icon" /></i>3</li>
+                                                    <li><i><img src="images/icon/bath-icon.png" alt="bath-icon" /></i>2</li>
+                                                </ul>
+                                            </div>
+                                        </div><!-- Property Main Box -->
+                                    </div><!-- Col-md-12 /- -->
                                 </div>
-                            </div>
+                                @endfor
+                            @endif
                         </div>
                     </div>
                 </div><!-- Sale Property /- -->
@@ -329,137 +302,56 @@
                     <h3>Featured Property</h3>
                 </div>
                 <div id="featured-property" class="featured-property row">
-                    <div class="item">
-                        <!-- col-md-12 -->
-                        <div class="col-md-12 rent-block">
-                            <!-- Property Main Box -->
-                            <div class="property-main-box">
-                                <div class="property-images-box">
-                                    <span>R</span>
-                                    <a title="Property Image" href="#"><img src="{{ asset('frontEnd') }}/images/featured/featured-1.jpg" alt="featured" /></a>
-                                    <h4>&dollar;380 / pm</h4>
+                    @if(isset($propertyFeatured) && count($propertyFeatured) != 0)
+                        @foreach($propertyFeatured as $property)
+                            <div class="item">
+                                <!-- col-md-12 -->
+                                <div class="col-md-12 {{ propertyBlock($property->type) }}">
+                                    <!-- Property Main Box -->
+                                    <div class="property-main-box">
+                                        <div class="property-images-box">
+                                            <span>{{ propertyType($property->type) }}</span>
+                                            <a title="Property Image" href="{{ route('showProperty', $property->id) }}"><img src="{{ fileExist262($property->type, $property->home_image)  }}" alt="featured" /></a>
+                                            <h4>{{ propertyPrice($property->type, $property->price) }}</h4>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="property-details">
+                                            <a title="Property Title" href="{{ route('showProperty', $property->id) }}">{{ $property->title }}</a>
+                                            <ul>
+                                                <li><i class="fa fa-expand"></i>3326 sq</li>
+                                                <li><i><img src="{{ asset('frontEnd') }}/images/icon/bed-icon.png" alt="bed-icon" /></i>{{ $property->bedrooms }}</li>
+                                                <li><i><img src="{{ asset('frontEnd') }}/images/icon/bath-icon.png" alt="bath-icon" /></i>{{ $property->bathrooms }}</li>
+                                            </ul>
+                                        </div>
+                                    </div><!-- Property Main Box -->
                                 </div>
-                                <div class="clearfix"></div>
-                                <div class="property-details">
-                                    <a title="Property Title" href="#">Southwest 39th Terrace</a>
-                                    <ul>
-                                        <li><i class="fa fa-expand"></i>3326 sq</li>
-                                        <li><i><img src="{{ asset('frontEnd') }}/images/icon/bed-icon.png" alt="bed-icon" /></i>3</li>
-                                        <li><i><img src="{{ asset('frontEnd') }}/images/icon/bath-icon.png" alt="bath-icon" /></i>2</li>
-                                    </ul>
-                                </div>
-                            </div><!-- Property Main Box -->
+                            </div>
+                        @endforeach
+                    @else
+                        @for($i = 0; $i < 10; $i++)
+                            <div class="item">
+                            <div class="col-md-12 sale-block">
+                                <!-- Property Main Box -->
+                                <div class="property-main-box">
+                                    <div class="property-images-box">
+                                        <span>S</span>
+                                        <a title="Property Image" href="#"><img src="{{ asset('frontEnd') }}/images/featured/featured-2.jpg" alt="featured" /></a>
+                                        <h4>&dollar;330000</h4>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="property-details">
+                                        <a title="Property Title" href="#">Featured Property Here</a>
+                                        <ul>
+                                            <li><i class="fa fa-expand"></i>3326 sq</li>
+                                            <li><i><img src="{{ asset('frontEnd') }}/images/icon/bed-icon.png" alt="bed-icon" /></i>3</li>
+                                            <li><i><img src="{{ asset('frontEnd') }}/images/icon/bath-icon.png" alt="bath-icon" /></i>2</li>
+                                        </ul>
+                                    </div>
+                                </div><!-- Property Main Box /- -->
+                            </div><!-- col-md-12 /- -->
                         </div>
-                    </div>
-                    <div class="item">
-                        <div class="col-md-12 sale-block">
-                            <!-- Property Main Box -->
-                            <div class="property-main-box">
-                                <div class="property-images-box">
-                                    <span>S</span>
-                                    <a title="Property Image" href="#"><img src="{{ asset('frontEnd') }}/images/featured/featured-2.jpg" alt="featured" /></a>
-                                    <h4>&dollar;330000</h4>
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="property-details">
-                                    <a title="Property Title" href="#">20 Apartments of Type A</a>
-                                    <ul>
-                                        <li><i class="fa fa-expand"></i>3326 sq</li>
-                                        <li><i><img src="{{ asset('frontEnd') }}/images/icon/bed-icon.png" alt="bed-icon" /></i>3</li>
-                                        <li><i><img src="{{ asset('frontEnd') }}/images/icon/bath-icon.png" alt="bath-icon" /></i>2</li>
-                                    </ul>
-                                </div>
-                            </div><!-- Property Main Box /- -->
-                        </div><!-- col-md-12 /- -->
-                    </div>
-                    <div class="item">
-                        <!-- col-md-12 -->
-                        <div class="col-md-12 rent-block">
-                            <!-- Property Main Box -->
-                            <div class="property-main-box">
-                                <div class="property-images-box">
-                                    <span>R</span>
-                                    <a title="Property Image" href="#"><img src="{{ asset('frontEnd') }}/images/featured/featured-3.jpg" alt="featured" /></a>
-                                    <h4>&dollar;380 / pm</h4>
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="property-details">
-                                    <a title="Property Title" href="#">15 Apartments of Type B</a>
-                                    <ul>
-                                        <li><i class="fa fa-expand"></i>3326 sq</li>
-                                        <li><i><img src="{{ asset('frontEnd') }}/images/icon/bed-icon.png" alt="bed-icon" /></i>3</li>
-                                        <li><i><img src="{{ asset('frontEnd') }}/images/icon/bath-icon.png" alt="bath-icon" /></i>2</li>
-                                    </ul>
-                                </div>
-                            </div><!-- Property Main Box /- -->
-                        </div><!-- Col-md-12 /- -->
-                    </div>
-                    <div class="item">
-                        <!-- Col-md-12 -->
-                        <div class="col-md-12 sale-block">
-                            <!-- Property Main Box -->
-                            <div class="property-main-box">
-                                <div class="property-images-box">
-                                    <span>S</span>
-                                    <a title="Property Image" href="#"><img src="{{ asset('frontEnd') }}/images/featured/featured-4.jpg" alt="featured" /></a>
-                                    <h4>&dollar;380000</h4>
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="property-details">
-                                    <a title="Property Title" href="#">Southwest 39th Terrace</a>
-                                    <ul>
-                                        <li><i class="fa fa-expand"></i>3326 sq</li>
-                                        <li><i><img src="{{ asset('frontEnd') }}/images/icon/bed-icon.png" alt="bed-icon" /></i>3</li>
-                                        <li><i><img src="{{ asset('frontEnd') }}/images/icon/bath-icon.png" alt="bath-icon" /></i>2</li>
-                                    </ul>
-                                </div>
-                            </div><!-- Property Main Box -->
-                        </div><!-- Col-md-12 /- -->
-                    </div>
-                    <div class="item">
-                        <!-- Col-md-12 -->
-                        <div class="col-md-12 rent-block">
-                            <!-- Property Main Box -->
-                            <div class="property-main-box">
-                                <div class="property-images-box">
-                                    <span>R</span>
-                                    <a title="Property Image" href="#"><img src="{{ asset('frontEnd') }}/images/featured/featured-1.jpg" alt="featured" /></a>
-                                    <h4>&dollar;380 / pm</h4>
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="property-details">
-                                    <a title="Property Title" href="#">Southwest 39th Terrace</a>
-                                    <ul>
-                                        <li><i class="fa fa-expand"></i>3326 sq</li>
-                                        <li><i><img src="{{ asset('frontEnd') }}/images/icon/bed-icon.png" alt="bed-icon" /></i>3</li>
-                                        <li><i><img src="{{ asset('frontEnd') }}/images/icon/bath-icon.png" alt="bath-icon" /></i>2</li>
-                                    </ul>
-                                </div>
-                            </div><!-- Property Main Box /- -->
-                        </div><!-- Col-md-12 -->
-                    </div>
-                    <div class="item">
-                        <!-- Col-md-12 -->
-                        <div class="col-md-12 sale-block">
-                            <!-- Property Main Box -->
-                            <div class="property-main-box">
-                                <div class="property-images-box">
-                                    <span>s</span>
-                                    <a title="Property Image" href="#"><img src="{{ asset('frontEnd') }}/images/featured/featured-2.jpg" alt="featured" /></a>
-                                    <h4>&dollar;380000</h4>
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="property-details">
-                                    <a title="Property Title" href="#">Southwest 39th Terrace</a>
-                                    <ul>
-                                        <li><i class="fa fa-expand"></i>3326 sq</li>
-                                        <li><i><img src="{{ asset('frontEnd') }}/images/icon/bed-icon.png" alt="bed-icon" /></i>3</li>
-                                        <li><i><img src="{{ asset('frontEnd') }}/images/icon/bath-icon.png" alt="bath-icon" /></i>2</li>
-                                    </ul>
-                                </div>
-                            </div><!-- Property Main Box -->
-                        </div><!-- Col-md-12 -->
-                    </div>
+                        @endfor
+                    @endif
                 </div>
             </div>
         </div><!-- Featured Section /- -->
@@ -502,7 +394,7 @@
                                 <p>Our Latest listed properties and check out the facilities on them.</p>
                             </div>
                         </div>
-                        <a title="Add Now" href="#">Add Now</a>
+                        <a title="Add Now" href="{{ route('propertyForm') }}">Add Now</a>
                     </div>
                 </div><!-- col-md-4 /- -->
 
@@ -513,33 +405,51 @@
                         <h3>Agents</h3>
                     </div>
                     <div class="agent-property">
-                        <div class="property-guide">
-                            <div class="col-md-3 col-sm-4 col-xs-2 p_l_z">
-                                <span class="guide-icon"><img src="{{ asset('frontEnd') }}/images/guide/agent-1.jpg" alt="agent-1" /></span>
+                        @if(isset($users) && $users != null)
+                            @foreach($users as $user)
+                                <div class="property-guide">
+                                    <div class="col-md-3 col-sm-4 col-xs-2 p_l_z">
+        {{--                                @if()--}}
+                                            <span class="guide-icon"><img src="{{ asset('frontEnd') }}/images/guide/agent-1.jpg" alt="agent-1" /></span>
+        {{--                                @else--}}
+        {{--                                    <span class="guide-icon"><img src="{{ asset('frontEnd') }}/images/guide/agent-1.jpg" alt="agent-1" /></span>--}}
+        {{--                                @endif    --}}
+                                    </div>
+                                    <div class="col-md-9 col-sm-8 col-xs-10">
+                                        <h3>{{ $user->name }}</h3>
+                                        <p>{{ $user->bio }}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="property-guide">
+                                <div class="col-md-3 col-sm-4 col-xs-2 p_l_z">
+                                    <span class="guide-icon"><img src="{{ asset('frontEnd') }}/images/guide/agent-1.jpg" alt="agent-1" /></span>
+                                </div>
+                                <div class="col-md-9 col-sm-8 col-xs-10">
+                                    <h3>John Doe Dummy</h3>
+                                    <p>Our Latest listed properties and check out the facilities on them.</p>
+                                </div>
                             </div>
-                            <div class="col-md-9 col-sm-8 col-xs-10">
-                                <h3>John Doe</h3>
-                                <p>Our Latest listed properties and check out the facilities on them.</p>
+                            <div class="property-guide">
+                                <div class="col-md-3 col-sm-4 col-xs-2 p_l_z">
+                                    <span class="guide-icon"><img src="{{ asset('frontEnd') }}/images/guide/agent-1.jpg" alt="agent-1" /></span>
+                                </div>
+                                <div class="col-md-9 col-sm-8 col-xs-10">
+                                    <h3>John Doe Dummy</h3>
+                                    <p>Our Latest listed properties and check out the facilities on them.</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="property-guide">
-                            <div class="col-md-3 col-sm-4 col-xs-2 p_l_z">
-                                <span class="guide-icon"><img src="{{ asset('frontEnd') }}/images/guide/agent-2.jpg" alt="agent-2" /></span>
+                            <div class="property-guide">
+                                <div class="col-md-3 col-sm-4 col-xs-2 p_l_z">
+                                    <span class="guide-icon"><img src="{{ asset('frontEnd') }}/images/guide/agent-1.jpg" alt="agent-1" /></span>
+                                </div>
+                                <div class="col-md-9 col-sm-8 col-xs-10">
+                                    <h3>John Doe Dummy</h3>
+                                    <p>Our Latest listed properties and check out the facilities on them.</p>
+                                </div>
                             </div>
-                            <div class="col-md-9 col-sm-8 col-xs-10">
-                                <h3>John Doe</h3>
-                                <p>Our Latest listed properties and check out the facilities on them.</p>
-                            </div>
-                        </div>
-                        <div class="property-guide">
-                            <div class="col-md-3 col-sm-4 col-xs-2 p_l_z">
-                                <span class="guide-icon"><img src="{{ asset('frontEnd') }}/images/guide/agent-3.jpg" alt="agent-3" /></span>
-                            </div>
-                            <div class="col-md-9 col-sm-8 col-xs-10">
-                                <h3>John Doe</h3>
-                                <p>Our Latest listed properties and check out the facilities on them.</p>
-                            </div>
-                        </div>
+                        @endif
                     </div>
                 </div><!-- col-md-4 /- -->
 
@@ -581,20 +491,6 @@
                 </div><!-- col-md-4 /- -->
             </div><!-- container /- -->
         </div><!-- Property Guide Section /- -->
-
-        <!-- Partner Section -->
-        <div id="partner-section" class="partner-section">
-            <div class="container">
-                <div id="business-partner" class="business-partner">
-                    <div class="item"><a title="Gallery Image" href="#"><img src="{{ asset('frontEnd') }}/images/aa-listing/client1.jpg" alt="client1"></a></div>
-                    <div class="item"><a title="Gallery Image" href="#"><img src="{{ asset('frontEnd') }}/images/aa-listing/client2.jpg" alt="client2"></a></div>
-                    <div class="item"><a title="Gallery Image" href="#"><img src="{{ asset('frontEnd') }}/images/aa-listing/client3.jpg" alt="client3"></a></div>
-                    <div class="item"><a title="Gallery Image" href="#"><img src="{{ asset('frontEnd') }}/images/aa-listing/client1.jpg" alt="client1"></a></div>
-                    <div class="item"><a title="Gallery Image" href="#"><img src="{{ asset('frontEnd') }}/images/aa-listing/client4.jpg" alt="client4"></a></div>
-                    <div class="item"><a title="Gallery Image" href="#"><img src="{{ asset('frontEnd') }}/images/aa-listing/client2.jpg" alt="client1"></a></div>
-                </div>
-            </div>
-        </div><!-- Partner Section /- -->
     </div><!-- Page Content -->
 
 @stop
