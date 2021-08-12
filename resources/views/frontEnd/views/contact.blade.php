@@ -66,20 +66,24 @@
             </div><!---contact-address-section/- -->
             <!-- contact-feedback-form-section -->
             <div class="col-md-9 col-sm-6 col-xs-12">
+                @if (isset($success))
+                    <h5 style="color: green">{{ $success }}</h5>
+                @endif
                 <div class="contact-feedback-form">
                     <h3>Send us a message</h3>
-                    <form>
+                    <form action="{{ route('contactUs') }}" method="post" enctype="multipart/form-data">
+                        @csrf
                         <div class="col-md-6 col-xs-12">
-                            <input type="text" id="input_name" name="contact-name" placeholder="Your Name" required />
+                            <input type="text" id="input_name" name="contact_name" placeholder="Your Name" required />
                         </div>
                         <div class="col-md-6 col-xs-12">
-                            <input type="email" id="input_email" name="contact-email" placeholder="Your Email ID" required />
+                            <input type="email" id="input_email" name="contact_email" placeholder="Your Email ID" required />
                         </div>
                         <div class="col-md-12 col-xs-12">
-                            <textarea rows="3" id="textarea_message" name="contact-message" placeholder="Message"></textarea>
+                            <textarea rows="3" id="textarea_message" required name="contact_message" placeholder="Message"></textarea>
                         </div>
-                        <div class="col-md-12 col-xs-12">
-                            <input type="submit" id="btn_smt" value="Submit">
+                        <div class="col-md-12 col-xs-12" style="text-align: center;">
+                            <input type="submit" value="Submit">
                         </div>
                         <div class="col-md-12 col-sm-12">
                             <div id="alert-msg" class="alert-msg"></div>

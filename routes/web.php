@@ -67,9 +67,21 @@ Route::get('/contact/us', function () {
     return view('frontEnd.views.contact');
 })->name('contactUs');
 
+Route::post('/contact/us',
+    'App\Http\Controllers\backEnd\ContactUs\ContactController@contactMessage')
+    ->name('contactUs');
+
 Route::get('/agent/profile/{user}',
     'App\Http\Controllers\frontEnd\Home\HomeController@agent')
     ->name('profile');
+
+Route::post('/agent/profile/image',
+    'App\Http\Controllers\frontEnd\Home\HomeController@profileImage')
+    ->name('profileImage');
+
+Route::post('/agent/profile/update',
+    'App\Http\Controllers\frontEnd\Home\HomeController@profileUpdate')
+    ->name('profileUpdate');
 
 /*Route::get('/home', function () {
     return view('frontEnd.views.home');

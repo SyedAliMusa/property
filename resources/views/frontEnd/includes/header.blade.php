@@ -72,7 +72,9 @@
             </div><!-- Menu Block /- -->
         </div><!-- Navigation Block /- -->
         <div class="pull-right">
-            <a title="User" href="#" class="user-icon"><img src="{{ asset('frontEnd') }}/images/icon/user-icon.png" alt="user icon" /></a>
+            @auth()
+                <a title="User" href="{{ route('profile', auth()->id())}}" class="user-icon"><img src="{{ asset('frontEnd') }}/images/icon/user-icon.png" alt="user icon" /></a>
+            @endauth
             <div id="sb-search" class="sb-search">
                 <form>
                     <input class="sb-search-input" placeholder="Enter your search term..." type="text" value="" name="search" id="search">

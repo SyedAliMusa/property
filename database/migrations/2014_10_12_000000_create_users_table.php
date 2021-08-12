@@ -17,8 +17,16 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('profile');
+            $table->string('small_profile');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('mobile');
+            $table->string('telephone');
+            $table->string('bio');
+            $table->boolean('is_active')->default(true);
+            $table->boolean('is_confirmed')->default(false);
+            $table->boolean('is_feature')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

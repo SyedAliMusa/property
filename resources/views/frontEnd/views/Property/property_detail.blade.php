@@ -150,7 +150,8 @@
                             <p><i class="fa fa-envelope-o"></i><a href="mailto:info@johndoe.com" title="mail">{{ $property->user->email }}</a></p>
                             <a title="View More" href="{{ route('profile', $property->user->id) }}" class="view-more">View Profile</a>
                         </div>
-                        <aside class="widget widget-search">
+                        <aside class="widget widget-search"></aside>
+                        {{--<aside class="widget widget-search">
                             <h2 class="widget-title">Send Message to<span>John Doe</span></h2>
                             <form>
                                 <input type="text" placeholder="Your Name" />
@@ -158,7 +159,7 @@
                                 <textarea placeholder="Message"></textarea>
                                 <input type="submit" value="Submit" class="btn">
                             </form>
-                        </aside>
+                        </aside>--}}
                         <aside class="widget widget-property-featured">
                             <h2 class="widget-title">Most<span>Recent</span></h2>
                             @if($latest)

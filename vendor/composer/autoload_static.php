@@ -540,6 +540,7 @@ class ComposerStaticInitb09a036d2a53a08a01d509d21bcbe469
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
+        'App\\Models\\ContactUs' => __DIR__ . '/../..' . '/app/Models/ContactUs.php',
         'App\\Models\\Property' => __DIR__ . '/../..' . '/app/Models/Property.php',
         'App\\Models\\PropertyFeatures' => __DIR__ . '/../..' . '/app/Models/PropertyFeatures.php',
         'App\\Models\\PropertyImages' => __DIR__ . '/../..' . '/app/Models/PropertyImages.php',

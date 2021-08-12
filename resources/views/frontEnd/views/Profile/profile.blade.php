@@ -32,34 +32,43 @@
                 <div class="property-profile-block">
                     <div class="profile-photo">
                         <div class="col-md-2 p_l_z">
-                            <img src="{{ agentProfileImage() }}" alt="profile1" />
+                            <img src="{{ agentProfileImage($user->profile, "large") }}" alt="profile1" />
                         </div>
                         <div class="col-md-10">
                             @auth()
                                 @if(auth()->id() == $user->id)
-                                    @php $dis = "false" @endphp
-                                    <button type="button" class="btn">Change</button>
-                                    <button type="button" class="btn">Remove</button>
+                                    @php $dis = "" @endphp
+                                    <form id="uploadform" method="post" action="{{ route('profileImage') }}" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="file" name="myProfile" id="actual-btn" onchange="yourFunction()" style="display: none"/>
+                                        <label class="label-profile" for="actual-btn">Choose File</label>
+                                    </form>
                                 @else
-                                    @php $dis = "true" @endphp
+                                    @php $dis = "disabled" @endphp
                                 @endif
                             @else
-                                @php $dis = "true" @endphp
+                                @php $dis = "disabled" @endphp
                             @endauth
                             <h4>{{ $user->name }}</h4>
                             <p>{{ $user->created_at->format('d-m-Y') }}</p>
                         </div>
                     </div>
+                    <script>
+                        function yourFunction(){
+                        document.getElementById("uploadform").submit();// Form submission
+                        }
+                    </script>
                     <div class="property-profile-form">
-                        <form>
+                        <form method="post" action="{{ route('profileUpdate') }}" enctype="multipart/form-data">
+                            @csrf
                             <div class="col-md-12 p_r_z">
                                 <div class="col-md-1 p_z"></div>
                                 <div class="col-md-4 p_z">
-                                    <input type="text" name="name" placeholder="Display Name*(John Deo)" value="{{ $user->name }}" disabled="{{ $dis }}">
+                                    <input type="text" name="name" placeholder="Display Name*(John Deo)" value="{{ $user->name }}" {{ $dis }}>
                                 </div>
                                 <div class="col-md-2 p_z"></div>
                                 <div class="col-md-4 p_z">
-                                    <input type="text" name="email" placeholder="Email*" value="{{ $user->email }}" readonly disabled="{{ $dis }}">
+                                    <input type="text" name="email" placeholder="Email*" value="{{ $user->email }}" readonly {{ $dis }}>
                                 </div>
                                 <div class="col-md-1 p_z"></div>
                             </div>
@@ -81,18 +90,18 @@
                             <div class="col-md-12 p_r_z">
                                 <div class="col-md-1 p_z"></div>
                                 <div class="col-md-4 p_l_z">
-                                    <input type="text" name="mobile" placeholder="Mobile Number" value="{{ $user->mobile }}" disabled="{{ $dis }}">
+                                    <input type="text" name="mobile" placeholder="Mobile Number" value="{{ $user->mobile }}" {{ $dis }}>
                                 </div>
                                 <div class="col-md-2 p_z"></div>
                                 <div class="col-md-6 p_r_z">
-                                    <input type="text" placeholder="Office Number" name="officeNo" value="{{ $user->office }}" disabled="{{ $dis }}">
+                                    <input type="text" placeholder="Office Number" name="officeNo" value="{{ $user->telephone }}" {{ $dis }}>
                                 </div>
                                 <div class="col-md-1 p_z"></div>
                             </div>
                             <div class="col-md-12 p_r_z">
                                 <div class="col-md-1 p_z"></div>
                                 <div class="col-md-10 p_z">
-                                    <textarea rows="4" name="bio" placeholder="Biographical Information" disabled="{{ $dis }}">{{ $user->bio }}</textarea>
+                                    <textarea rows="4" name="bio" placeholder="Biographical Information" {{ $dis }}>{{ $user->bio }}</textarea>
                                 </div>
                                 <div class="col-md-1 p_z"></div>
                             </div>

@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 
 class HomeController extends Controller
@@ -168,5 +169,48 @@ class HomeController extends Controller
 
     public function agent(User $user) {
         return view('frontEnd.views.Profile.profile', compact('user'));
+    }
+
+    public function profileUpdate(Request $request) {
+        $user = User::find(\auth()->id());
+        if ($request->has('password') && $request->password != null) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->name = $request->name;
+        $user->mobile = $request->mobile;
+        $user->telephone = $request->officeNo;
+        $user->bio = $request->bio;
+        $user->save();
+        return redirect(route('profile', $user->id));
+    }
+
+    public function profileImage(Request $request) {
+
+        if ($request->hasFile('myProfile')) {
+
+            $file = $request->file('myProfile');
+            $path = public_path() . '/Profile';
+            $nameO = $file->getClientOriginalName();
+            $filename = pathinfo($nameO, PATHINFO_FILENAME);
+            $extension = pathinfo($nameO, PATHINFO_EXTENSION);
+            $name = $nameO . '_'. md5(time() . $filename) . '.' . $extension;
+            $nameS = 'small_' . $nameO . '_'. md5(time() . $filename) . '.' . $extension;
+
+            $img = Image::make($file->path());
+
+            $img->resize(163, 163)->save($path . '/' . $name);
+            $img->resize(65, 65)->save($path . '/' . $nameS);
+
+            $user = User::find(\auth()->id());
+            $user->profile = $name;
+            $user->small_profile = $nameS;
+            $user->save();
+
+        } else {
+            return back();
+        }
+
+        return redirect(route('profile', $user->id));
     }
 }

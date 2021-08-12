@@ -130,4 +130,19 @@ class PropertyController extends Controller
     public function agent($id) {
         echo $id;
     }
+
+    public function searchProperty(Request $request) {
+        if ($request->has('propertyId') && $request->propertyId != null) {
+            $data = Property::with(['user', 'propertyImages', 'propertyFeatures'])
+                    ->where('property_id', $request->propertyId)
+                    ->Active()
+                    ->Sold()
+                    ->Pending()
+                    ->Deleted()
+                    ->first();
+            if (!empty($data)) {
+                return redirect(route('showProperty', $data->id));
+            }
+        }
+    }
 }

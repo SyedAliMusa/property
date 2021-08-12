@@ -409,15 +409,11 @@
                             @foreach($users as $user)
                                 <div class="property-guide">
                                     <div class="col-md-3 col-sm-4 col-xs-2 p_l_z">
-        {{--                                @if()--}}
-                                            <span class="guide-icon"><img src="{{ asset('frontEnd') }}/images/guide/agent-1.jpg" alt="agent-1" /></span>
-        {{--                                @else--}}
-        {{--                                    <span class="guide-icon"><img src="{{ asset('frontEnd') }}/images/guide/agent-1.jpg" alt="agent-1" /></span>--}}
-        {{--                                @endif    --}}
+                                            <span class="guide-icon"><img src="{{ agentProfileImage($user->small_profile)  }}" alt="agent-1" /></span>
                                     </div>
                                     <div class="col-md-9 col-sm-8 col-xs-10">
                                         <h3>{{ $user->name }}</h3>
-                                        <p>{{ $user->bio }}</p>
+                                        <p>{{ \Illuminate\Support\Str::limit($user->bio, 66, '...') }}</p>
                                     </div>
                                 </div>
                             @endforeach
