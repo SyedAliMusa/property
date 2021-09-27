@@ -17,10 +17,10 @@ class HomeController extends Controller
 {
     public function index() {
 
-        $propertySale = Property::Property('Sale', 6);
-        $propertyRent = Property::Property('Rent', 6);
-        $propertyFeatured = Property::PropertyFeatured(10);
-        $users  = User::FeaturedUsers(3);
+        $propertySale = Property::getTypedProperty('Sale', 6);
+        $propertyRent = Property::getTypedProperty('Rent', 6);
+        $propertyFeatured = Property::featuredProperty(10);
+        $users  = User::limitFeaturedAgents(3);
         return view('frontEnd.views.home', compact(
             'propertySale',
             'propertyRent',
@@ -34,13 +34,17 @@ class HomeController extends Controller
         $myList = Property::with(['user', 'propertyImages', 'propertyFeatures'])
                     ->where('agent_id', auth()->id())
                     ->Active()
-                    ->Sold()
-                    ->Pending()
                     ->Deleted()
                     ->get();
-//        dd($myList);
-        $latest = Property::LastThreeFeaturedProperty(6);
+        $latest = Property::lastThreeFeaturedProperty(6);
         return view('frontEnd.views.Profile.my_property_list', compact('myList', 'latest'));
+    }
+
+    public function setAsSold(Property $property): \Illuminate\Http\RedirectResponse
+    {
+        $property->is_sold = !$property->is_sold;
+        $property->save();
+        return back();
     }
 
     public function edit(Property $property) {
@@ -157,7 +161,7 @@ class HomeController extends Controller
             ->Pending()
             ->Deleted()
             ->get();
-        $latest = Property::LastThreeFeaturedProperty(6);
+        $latest = Property::lastThreeFeaturedProperty(6);
         return view('frontEnd.views.Profile.my_property_list', compact('myList', 'latest', 'success'));
     }
 

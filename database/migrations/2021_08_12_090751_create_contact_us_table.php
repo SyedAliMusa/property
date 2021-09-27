@@ -17,7 +17,8 @@ class CreateContactUsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
-            $table->string('message');
+            $table->text('message');
+            $table->string('subject');
             $table->string('action_description')->default('N/A');
             $table->boolean('action')->default(false);
             $table->boolean('ticket_closed')->default(false);

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -42,16 +43,49 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function properties() {
-        return $this->hasMany(Property::class);
+    public function properties(): HasMany
+    {
+        return $this->hasMany(Property::class, 'agent_id');
     }
 
-    public static function FeaturedUsers($limit) {
+    public function soldProperties(): HasMany
+    {
+        return $this->hasMany(Property::class, 'agent_id')->where('is_sold', '=', true);;
+    }
+
+    public static function allAgentsCount(){
+        return User::role('agent')
+            ->count();
+    }
+
+    public static function allFeaturedAgentCount() {
+        return User::role('agent')
+            ->Featured()
+            ->count();
+    }
+
+    public static function allFeaturedAgents() {
+        return User::role('agent')->with('properties')
+            ->Active()
+            ->Featured()
+            ->Confirmed()
+            ->get();
+    }
+
+    public static function limitFeaturedAgents($limit) {
         return User::role('agent')
             ->Active()
             ->Featured()
             ->Confirmed()
             ->latest()->take(3)
+            ->get();
+    }
+
+    public static function latestAgents($limit) {
+        return User::role('agent')
+            ->Active()
+            ->Confirmed()
+            ->latest()->take($limit)
             ->get();
     }
 

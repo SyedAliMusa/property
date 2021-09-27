@@ -68,94 +68,40 @@
             <!-- Container -->
             <div class="container">
                 <!-- col-md-10 -->
-                <div class="col-md-10 col-sm-9 p_l_z">
-                    <select>
-                        <option>Property ID</option>
-                        <option>Property ID</option>
-                        <option>Property ID</option>
-                        <option>Property ID</option>
-                        <option>Property ID</option>
-                    </select>
+                <form id="searchForm" action="{{ route('searchProperty') }}" method="get" enctype="multipart/form-data">
+                    <div class="col-md-10 col-sm-9 p_l_z">
+                        <input type="text" name="propertyId" placeholder="Property ID" class="search-property">
+                        <input type="text" name="location" placeholder="Location" class="search-property">
 
-                    <select>
-                        <option>Location</option>
-                        <option>Location</option>
-                        <option>Location</option>
-                        <option>Location</option>
-                        <option>Location</option>
-                    </select>
+                        <select name="type">
+                            <option value=''>Select Type</option>
+                            <option>Rent</option>
+                            <option>Sale</option>
+                        </select>
 
-                    <select>
-                        <option>Type</option>
-                        <option>Type</option>
-                        <option>Type</option>
-                        <option>Type</option>
-                        <option>Type</option>
-                    </select>
+                        <select name="style">
+                            <option value=''>Select Status</option>
+                            <option>Luxurious</option>
+                            <option>bungalow</option>
+                            <option>House</option>
+                            <option>Shop</option>
+                        </select>
+                        <input type="text" name="bedrooms" placeholder="Bedrooms" class="search-property" onkeypress="return onlyNumberKey(event)" >
+                        <input type="text" name="bathrooms" placeholder="Bathrooms" class="search-property" onkeypress="return onlyNumberKey(event)" >
+                        <input type="text" name="minPrice" placeholder="Min Price" class="search-property" onkeypress="return onlyNumberKey(event)" >
+                        <input type="text" name="maxPrice" placeholder="Max Price" class="search-property" onkeypress="return onlyNumberKey(event)" >
+                        <input type="text" name="minSq" placeholder="Min Sqft" class="search-property" onkeypress="return onlyNumberKey(event)" >
+                        <input type="text" name="maxSq" placeholder="Max Sqft" class="search-property" onkeypress="return onlyNumberKey(event)" >
 
-                    <select>
-                        <option>Status</option>
-                        <option>Status</option>
-                        <option>Status</option>
-                        <option>Status</option>
-                        <option>Status</option>
-                    </select>
-
-                    <select>
-                        <option>Bedrooms</option>
-                        <option>Bedrooms</option>
-                        <option>Bedrooms</option>
-                        <option>Bedrooms</option>
-                        <option>Bedrooms</option>
-                    </select>
-
-                    <select>
-                        <option>Bathrooms</option>
-                        <option>Bathrooms</option>
-                        <option>Bathrooms</option>
-                        <option>Bathrooms</option>
-                        <option>Bathrooms</option>
-                    </select>
-
-                    <select>
-                        <option>Min Price</option>
-                        <option>Min Price</option>
-                        <option>Min Price</option>
-                        <option>Min Price</option>
-                        <option>Min Price</option>
-                    </select>
-
-                    <select>
-                        <option>Max Price</option>
-                        <option>Max Price</option>
-                        <option>Max Price</option>
-                        <option>Max Price</option>
-                        <option>Max Price</option>
-                    </select>
-
-                    <select>
-                        <option>Min Sqft</option>
-                        <option>Min Sqft</option>
-                        <option>Min Sqft</option>
-                        <option>Min Sqft</option>
-                        <option>Min Sqft</option>
-                    </select>
-
-                    <select>
-                        <option>Max Sqft</option>
-                        <option>Max Sqft</option>
-                        <option>Max Sqft</option>
-                        <option>Max Sqft</option>
-                        <option>Max Sqft</option>
-                    </select>
-                </div><!-- col-md-10 /- -->
-                <!-- col-md-2 -->
-                <div class="col-md-2 col-sm-3">
-                    <div class="section-header">
-                        <h3><span>Search</span>Property</h3>
-                        <a title="search" class="btn" href="#">Search</a>
+                    </div><!-- col-md-10 /- -->
+                    <!-- col-md-2 -->
+                    <div class="col-md-2 col-sm-3">
+                        <div class="section-header">
+                            <h3><span>Search</span>Property</h3>
+                            <a title="search" class="btn" href="#" onclick="yourFunction()">Search</a>
+                        </div>
                     </div>
-                </div>
+                </form>
                 <!-- col-md-2 /- -->
             </div><!-- Container /- -->
         </div><!-- Search Section /- -->
@@ -488,5 +434,20 @@
             </div><!-- container /- -->
         </div><!-- Property Guide Section /- -->
     </div><!-- Page Content -->
+
+    <script>
+
+        function onlyNumberKey(evt) {
+            var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+            if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+                return false;
+            return true;
+        }
+
+        function yourFunction(){
+            document.getElementById("searchForm").submit();// Form submission
+        }
+
+    </script>
 
 @stop

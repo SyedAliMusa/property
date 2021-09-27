@@ -1887,6 +1887,18 @@ textarea {
 	font-size: 14px;
 }
 
+.property-profile-form input[type="password"]{
+    border: none;
+    border-bottom: 2px solid #c8c8c8;
+    background-color: #f2f4f5;
+    border-radius: 0px;
+    padding: 0;
+    box-shadow: none;
+    width: 100%;
+    padding: 12px 0;
+    font-size: 14px;
+}
+
 .property-profile-form input[type="submit"] {
 	display: inline-block;
 	padding: 9px 22px;
@@ -3368,5 +3380,51 @@ textarea {
     border-radius: 0.3rem;
     cursor: pointer;
     margin-top: 1rem;
+}
+
+.search-property {
+    width: 16.4%;
+    padding: 12px 0;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #c8c8c8;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-position: right center;
+    background-repeat: no-repeat;
+    box-shadow: none;
+    margin-left: 30px;
+    margin-bottom: 30px;
+    outline: none;
+}
+
+.side-search-property {
+    width: 45.4%;
+    padding: 12px 0;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #c8c8c8;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-position: right center;
+    background-repeat: no-repeat;
+    box-shadow: none;
+    margin-left: 5px;
+    margin-bottom: 30px;
+    outline: none;
+}
+
+.input-search-btn {
+    background-color: #79b445;
+    max-width: 118px;
+    max-height: 37px;
+    line-height: 36px;
+    font-weight:  bold;
+    font-size: 16px;
+    border-radius: 0;
+    color: #fff;
+    padding: 0;
+    text-align: center;
+    display: block;
 }
 

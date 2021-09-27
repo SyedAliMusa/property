@@ -52,7 +52,8 @@ class PropertyController extends Controller
 
         $property = new Property();
 
-        $property->property_id = $request->propertyId;
+        $id = explode('@', auth()->user()->email);
+        $property->property_id = $id[0].uniqid();
         $property->agent_id = Auth::id();
         $property->description = $request->description;
         $property->title = $request->title;
@@ -71,11 +72,6 @@ class PropertyController extends Controller
         $property->featured_image =$fName;
         $property->home_image = $hName;
         $property->save();
-
-//        $path = public_path() . '/PropertyImages/Sale';
-//        if ($property->status == 'Rent') {
-//            $path = public_path() . '/PropertyImages/Rent';
-//        }
 
         if ($request->hasfile('file')) {
             foreach ($request->file('file') as $file) {
@@ -113,13 +109,22 @@ class PropertyController extends Controller
             ->Sold()
             ->Pending()
             ->Deleted()
-            ->simplePaginate(2);
-        $latest = Property::LastThreeFeaturedProperty(6);
+            ->paginate(2);
+        $latest = Property::lastThreeFeaturedProperty(6);
         return view('frontEnd.views.Property.property_list', compact('list', 'latest'));
     }
 
     public function getProperty(Property $property) {
-        $latest = Property::LastThreeProperty();
+        if (Auth::check()) {
+            if(\auth()->user()->id != $property->user->id) {
+                $property->views = ($property->views) + 1;
+                $property->save();
+            }
+        } else {
+            $property->views = ($property->views) + 1;
+            $property->save();
+        }
+        $latest = Property::lastThreeProperty();
         $path = 'Sale';
         if ($property->type == 'Rent') {
             $path = 'Rent';
@@ -132,6 +137,7 @@ class PropertyController extends Controller
     }
 
     public function searchProperty(Request $request) {
+
         if ($request->has('propertyId') && $request->propertyId != null) {
             $data = Property::with(['user', 'propertyImages', 'propertyFeatures'])
                     ->where('property_id', $request->propertyId)
@@ -144,5 +150,54 @@ class PropertyController extends Controller
                 return redirect(route('showProperty', $data->id));
             }
         }
+
+        $list = Property::with(['user', 'propertyImages', 'propertyFeatures'])
+                ->Active()
+                ->Sold()
+                ->Pending()
+                ->Deleted();
+
+        if ($request->has('location') && $request->location != null) {
+            $list->where('location', 'like', "%{$request->location}%");
+        }
+
+        if ($request->has('type') && $request->type != null) {
+            $list->where('type', 'like', "%{$request->type}%");
+        }
+
+        if ($request->has('style') && $request->style != null) {
+            $list->where('style', 'like', "%{$request->style}%");
+        }
+
+        if ($request->has('bedrooms') && $request->bedrooms != null) {
+            $list->where('bedrooms', 'like', "%{$request->bedrooms}%");
+        }
+
+        if ($request->has('bathrooms') && $request->bathrooms != null) {
+            $list->where('bathrooms', 'like', "%{$request->bathrooms}%");
+        }
+
+        if ($request->has('minPrice') && $request->minPrice != null) {
+            $list->where('price', '>=', $request->minPrice);
+        }
+
+        if ($request->has('maxPrice') && $request->maxPrice != null) {
+            $list->where('price', '<', $request->maxPrice);
+        }
+
+        if ($request->has('minSq') && $request->minSq != null) {
+
+            $list->where('area', '>=', $request->minSq);
+        }
+
+        if ($request->has('maxSq') && $request->maxSq != null) {
+            $list->where('area', '<', $request->maxSq);
+        }
+
+        $list = $list->orderBy('id', 'DESC')->paginate(2);
+
+        $latest = Property::lastThreeFeaturedProperty(6);
+        return view('frontEnd.views.search', compact('list', 'latest'));
+
     }
 }

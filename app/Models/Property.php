@@ -4,26 +4,97 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Property extends Model
 {
     use HasFactory;
 
-    public function user() {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class, 'agent_id')
             ->where('is_active', '=', true);
     }
 
-    public function propertyImages() {
+    public function propertyImages(): HasMany
+    {
         return $this->hasMany(PropertyImages::class)
             ->where('is_deleted', '=', false);
     }
 
-    public function propertyFeatures() {
+    public function propertyFeatures(): HasMany
+    {
         return $this->hasMany(PropertyFeatures::class);
     }
 
-    public static function PropertyFeatured($limit) {
+    public static function allPropertyCount() {
+        return Property::with(['user', 'propertyImages', 'propertyFeatures'])
+            ->Active()
+            ->Sold()
+            ->Pending()
+            ->Deleted()
+            ->count();
+    }
+
+    public static function allProperty() {
+        return Property::with(['user', 'propertyImages', 'propertyFeatures'])
+            ->Active()
+            ->Sold()
+            ->Pending()
+            ->Deleted()
+            ->get();
+    }
+
+    public static function soldPropertyCount() {
+        return Property::Active()
+                    ->Sold(true)
+                    ->count();
+    }
+
+    public static function soldProperty() {
+        return Property::with(['user', 'propertyImages', 'propertyFeatures'])
+            ->Active()
+            ->Sold(true)
+            ->Pending()
+            ->Deleted()
+            ->get();
+    }
+
+    public static function latestSoldProperty($limit) {
+        return Property::with(['user', 'propertyImages', 'propertyFeatures'])
+            ->Active()
+            ->Sold(true)
+            ->Pending()
+            ->Deleted()
+            ->latest()->take($limit)
+            ->get();
+    }
+
+    public static function deletedPropertyAll() {
+        return Property::with(['user', 'propertyImages', 'propertyFeatures'])
+            ->Deleted(true)
+            ->get();
+    }
+
+    public static function featuredPropertyAll() {
+        return Property::with(['user', 'propertyImages', 'propertyFeatures'])
+            ->Active()
+            ->Featured()
+            ->Sold()
+            ->Pending()
+            ->Deleted()
+            ->get();
+    }
+
+    public static function inActivePropertyAll() {
+        return Property::with(['user', 'propertyImages', 'propertyFeatures'])
+            ->Active(false)
+            ->Deleted()
+            ->get();
+    }
+
+    public static function featuredProperty($limit) {
         return Property::with(['user', 'propertyImages', 'propertyFeatures'])
             ->Active()
             ->Featured()
@@ -34,7 +105,7 @@ class Property extends Model
             ->get();
     }
 
-    public static function Property($val, $limit) {
+    public static function getTypedProperty($val, $limit) {
         return Property::with(['user', 'propertyImages', 'propertyFeatures'])
                 ->where('type',$val)
                 ->Active()
@@ -45,7 +116,7 @@ class Property extends Model
                 ->get();
     }
 
-    public static function LastThreeProperty() {
+    public static function lastThreeProperty() {
         return Property::with(['user', 'propertyImages', 'propertyFeatures'])
             ->Active()
             ->Sold()
@@ -55,7 +126,7 @@ class Property extends Model
             ->get();
     }
 
-    public static function LastThreeFeaturedProperty($limit = 3) {
+    public static function lastThreeFeaturedProperty($limit = 3) {
         return Property::with(['user', 'propertyImages', 'propertyFeatures'])
             ->Active()
             ->Featured()

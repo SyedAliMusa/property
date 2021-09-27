@@ -78,18 +78,13 @@
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <select name="city" required>
-                                            <option value="" disabled selected>City (select)</option>
-                                            <option>New York</option>
-                                            <option>Illinois</option>
-                                            <option>Texas</option>
-                                        </select>
+                                        <input type="text" required name="city" placeholder="City"  >
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" required name="bedrooms" placeholder="Bedrooms">
+                                        <input type="text" required name="bedrooms" placeholder="Bedrooms" onkeypress="return onlyNumberKey(event)" >
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" required name="bathrooms" placeholder="Bathrooms">
+                                        <input type="text" required name="bathrooms" placeholder="Bathrooms" onkeypress="return onlyNumberKey(event)" >
                                     </div>
                                     <div class="col-md-6">
                                         <select name="garage" required>
@@ -99,21 +94,21 @@
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" required name="price" placeholder="Price Postfix Text">
+                                        <input type="text" required name="price" placeholder="Price Without Rs" onkeypress="return onlyNumberKey(event)" >
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" required name="area" placeholder="Area">
+                                        <input type="text" required name="area" placeholder="Area" onkeypress="return onlyNumberKey(event)" >
                                     </div>
                                     <div class="col-md-6">
                                         <select name="unit" required>
-                                            <option value="" disabled selected>Area Unit (select)</option>
+{{--                                            <option value="" disabled selected>Area Unit (select)</option>--}}
                                             <option value="sq">Sq</option>
-                                            <option>Cm</option>
+{{--                                            <option>Cm</option>--}}
                                         </select>
                                     </div>
-                                    <div class="col-md-12">
+                                    {{--<div class="col-md-12">
                                         <input type="text" required name="propertyId" placeholder="Property Id">
-                                    </div>
+                                    </div>--}}
                                     <div class="col-md-12">
                                         <input type="text" name="videoUrl" placeholder="VirtualTour Video URL">
                                     </div>
@@ -286,4 +281,12 @@
             </div>
         </div>
     </div>
+    <script>
+        function onlyNumberKey(evt) {
+            var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+            if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+                return false;
+            return true;
+        }
+    </script>
 @stop

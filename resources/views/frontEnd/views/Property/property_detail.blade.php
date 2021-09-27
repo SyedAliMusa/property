@@ -56,7 +56,7 @@
                         <div id="property-detail1-slider" class="carousel slide property-detail1-slider" data-ride="carousel">
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner" role="listbox">
-                                @if($property->propertyImages)
+                                @if(count($property->propertyImages) > 0)
                                     @php
                                         $count = 0;
                                     @endphp
@@ -167,10 +167,10 @@
                                     @php $pth = 'Rent'; if($lat->type == 'Sale') { $pth = 'Sale';} @endphp
                                     <div class="property-featured-inner">
                                         <div class="col-md-4 col-sm-3 col-xs-2 p_z">
-                                            <a href="#" title="Featured Property"><img src="{{ asset('PropertyImages') }}/{{ $pth }}/{{ $lat->featured_image }}" alt="featured" /></a>
+                                            <a href="{{ route('showProperty', $lat->id) }}" title="Featured Property"><img src="{{ asset('PropertyImages') }}/{{ $pth }}/{{ $lat->featured_image }}" alt="featured" /></a>
                                         </div>
                                         <div class="col-md-8 col-sm-9 col-xs-10 featured-content">
-                                            <a href="#" title="Fetured Property">{{ $lat->title }}</a>
+                                            <a href="{{ route('showProperty', $lat->id) }}" title="Fetured Property">{{ $lat->title }}</a>
                                             @if($lat->type == 'Rent')
                                                 <h3>{{ $lat->price }}/pm</h3>
                                             @else

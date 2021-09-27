@@ -55,13 +55,14 @@
                         <ul class="nav navbar-nav">
                             <li><a href="{{ route('home') }}">Home</a></li>
                             <li><a href="{{ route('propertyList') }}">Listing</a></li>
-                            <li><a href="#">Blog</a></li>
+                            <li><a href="{{ route('blogs') }}">Blog</a></li>
                             <li><a href="{{ route('contactUs') }}">Contact Us</a></li>
                             @if (Route::has('login'))
                                 @auth
                                     <li><a href="{{ route('myPropertyList') }}">My Listing</a></li>
+                                    <li><a href="{{ route('logout') }}">Logout</a></li>
                                 @else
-                                    <li><a href="#">Sign in</a></li>
+                                    <li><a href="{{ route('login') }}">Sign in</a></li>
                                     <li><a href="{{ route('signUp') }}">Sign Up</a></li>
                                 @endauth
                             @endif

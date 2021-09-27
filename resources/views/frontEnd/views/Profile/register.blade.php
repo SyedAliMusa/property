@@ -4,7 +4,7 @@
     <div class="page-content">
         <!-- Banner Section -->
         <div id="page-banner-section" class="page-banner-section container-fluid p_z">
-            <img src="{{ asset('frontEnd') }}/images/aa-listing/banner.jpg" alt="banner">
+            <img src="{{ asset('frontEnd') }}/banner/propertyDetailBanner.jpg" alt="banner">
             <!-- Banner Inner -->
             <div class="page-title">
                 <div class="container ">
@@ -40,10 +40,10 @@
                                     <input required type="text" name="email" placeholder="Email*">
                                 </div>
                                 <div class="col-md-6 p_l_z">
-                                    <input type="text" required name="password" placeholder="Password">
+                                    <input type="password" required name="password" placeholder="Password">
                                 </div>
                                 <div class="col-md-6 p_r_z">
-                                    <input required type="text" name="cpassword" placeholder="Confirm Password">
+                                    <input required type="password" name="cpassword" placeholder="Confirm Password">
                                 </div>
                                 <div class="col-md-6 p_l_z">
                                     <input required name="mobile" type="text" placeholder="Mobile Number">

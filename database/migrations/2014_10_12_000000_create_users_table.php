@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('mobile');
             $table->string('telephone');
-            $table->string('bio');
+            $table->text('bio');
             $table->boolean('is_active')->default(true);
             $table->boolean('is_confirmed')->default(false);
             $table->boolean('is_feature')->default(false);

@@ -47,6 +47,11 @@
                                     <ul style="overflow-x: hidden; white-space: nowrap; width: 100%">
                                         <li style="display: inline"><i><a href="{{ route('editProperty', $l->id) }}"><img src="{{ asset('frontEnd') }}/images/icon/edit.png" alt="bath-icon" /></a></i></li>
                                         <li style="display: inline"><i><a href="{{ route('deleteProperty', $l->id) }}"><img src="{{ asset('frontEnd') }}/images/icon/del.png" alt="bath-icon" /></a></i></li>
+                                        @if(!$l->is_sold)
+                                            <li style="display: inline"><i><a href="{{ route('SetAgentPropertyType', $l->id) }}" class="btn btn-success">Set As Sold</a></i></li>
+                                        @else
+                                            <li style="display: inline"><i><a href="{{ route('SetAgentPropertyType', $l->id) }}" class="btn btn-success">Set As Available</a></i></li>
+                                        @endif
                                     </ul>
                                      <!-- Property Main Box -->
                                     <div class="property-main-box">

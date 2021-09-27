@@ -73,11 +73,14 @@
                     <h3>Send us a message</h3>
                     <form action="{{ route('contactUs') }}" method="post" enctype="multipart/form-data">
                         @csrf
-                        <div class="col-md-6 col-xs-12">
+                        <div class="col-md-4 col-xs-12">
                             <input type="text" id="input_name" name="contact_name" placeholder="Your Name" required />
                         </div>
-                        <div class="col-md-6 col-xs-12">
+                        <div class="col-md-4 col-xs-12">
                             <input type="email" id="input_email" name="contact_email" placeholder="Your Email ID" required />
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <input type="text" id="input_subject" name="subject" placeholder="Subject" required />
                         </div>
                         <div class="col-md-12 col-xs-12">
                             <textarea rows="3" id="textarea_message" required name="contact_message" placeholder="Message"></textarea>

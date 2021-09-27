@@ -77,99 +77,29 @@
                 <div class="col-md-3 col-sm-6 p_r_z property-sidebar widget-area">
                     <aside class="widget widget-search">
                         <h2 class="widget-title">search<span>property</span></h2>
-                        <form>
-                            <select>
-                                <option value="selected">Property ID</option>
-                                <option value="one">One</option>
-                                <option value="two">Two</option>
-                                <option value="three">Three</option>
-                                <option value="four">Four</option>
-                                <option value="five">Five</option>
+                        <form  id="searchForm" action="{{ route('searchProperty') }}" method="get" enctype="multipart/form-data">
+                            <input type="text" name="propertyId" placeholder="Property ID" class="side-search-property">
+                            <input type="text" name="location" placeholder="Location" class="side-search-property">
+
+                            <select name="type">
+                                <option value=''>Select Type</option>
+                                <option>Rent</option>
+                                <option>Sale</option>
                             </select>
-                            <select>
-                                <option value="selected">Location</option>
-                                <option value="one">One</option>
-                                <option value="two">Two</option>
-                                <option value="three">Three</option>
-                                <option value="four">Four</option>
-                                <option value="five">Five</option>
+
+                            <select name="style">
+                                <option value=''>Select Status</option>
+                                <option>Luxurious</option>
+                                <option>bungalow</option>
+                                <option>House</option>
+                                <option>Shop</option>
                             </select>
-                            <select>
-                                <option value="selected">Type</option>
-                                <option value="one">One</option>
-                                <option value="two">Two</option>
-                                <option value="three">Three</option>
-                                <option value="four">Four</option>
-                                <option value="five">Five</option>
-                            </select>
-                            <select>
-                                <option value="selected">Status</option>
-                                <option value="one">One</option>
-                                <option value="two">Two</option>
-                                <option value="three">Three</option>
-                                <option value="four">Four</option>
-                                <option value="five">Five</option>
-                            </select>
-                            <div class="col-md-6 col-sm-12 p_l_z">
-                                <select>
-                                    <option value="selected">Beds</option>
-                                    <option value="one">One</option>
-                                    <option value="two">Two</option>
-                                    <option value="three">Three</option>
-                                    <option value="four">Four</option>
-                                    <option value="five">Five</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 col-sm-12 p_r_z">
-                                <select>
-                                    <option value="selected">Baths</option>
-                                    <option value="one">One</option>
-                                    <option value="two">Two</option>
-                                    <option value="three">Three</option>
-                                    <option value="four">Four</option>
-                                    <option value="five">Five</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 col-sm-12 p_l_z">
-                                <select>
-                                    <option value="selected">Min Price</option>
-                                    <option value="one">One</option>
-                                    <option value="two">Two</option>
-                                    <option value="three">Three</option>
-                                    <option value="four">Four</option>
-                                    <option value="five">Five</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 col-sm-12 p_r_z">
-                                <select>
-                                    <option value="selected">Max Price</option>
-                                    <option value="one">$3000</option>
-                                    <option value="two">$30000</option>
-                                    <option value="three">$300000</option>
-                                    <option value="four">$3000000</option>
-                                    <option value="five">$3000000000000000</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 col-sm-12 p_l_z">
-                                <select>
-                                    <option value="selected">Min Sqft</option>
-                                    <option value="one">One</option>
-                                    <option value="two">Two</option>
-                                    <option value="three">Three</option>
-                                    <option value="four">Four</option>
-                                    <option value="five">Five</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 col-sm-12 p_r_z">
-                                <select>
-                                    <option value="selected">Max Sqft</option>
-                                    <option value="one">One</option>
-                                    <option value="two">Two</option>
-                                    <option value="three">Three</option>
-                                    <option value="four">Four</option>
-                                    <option value="five">Five</option>
-                                </select>
-                            </div>
+                            <input type="text" name="bedrooms" placeholder="Bedrooms" class="side-search-property" onkeypress="return onlyNumberKey(event)" >
+                            <input type="text" name="bathrooms" placeholder="Bathrooms" class="side-search-property" onkeypress="return onlyNumberKey(event)" >
+                            <input type="text" name="minPrice" placeholder="Min Price" class="side-search-property" onkeypress="return onlyNumberKey(event)" >
+                            <input type="text" name="maxPrice" placeholder="Max Price" class="side-search-property" onkeypress="return onlyNumberKey(event)" >
+                            <input type="text" name="minSq" placeholder="Min Sqft" class="side-search-property" onkeypress="return onlyNumberKey(event)" >
+                            <input type="text" name="maxSq" placeholder="Max Sqft" class="side-search-property" onkeypress="return onlyNumberKey(event)" >
                             <input type="submit" value="Search Now" class="btn">
                         </form>
                     </aside>
@@ -179,7 +109,7 @@
                             @foreach($latest as $lat)
                                 <div class="property-featured-inner">
                                     <div class="col-md-4 col-sm-3 col-xs-2 p_z">
-                                        <a title="Featured Property" href="#"><img src="{{ fileExist85($lat->type, $lat->featured_image) }}" alt="featured Image" /></a>
+                                        <a title="Featured Property" href="{{ route('showProperty', $lat->id) }}"><img src="{{ fileExist85($lat->type, $lat->featured_image) }}" alt="featured Image" /></a>
                                     </div>
                                     <div class="col-md-8 col-sm-9 col-xs-10 featured-content">
                                         <a title="Featured Property" href="{{ route('showProperty', $lat->id) }}">{{ $lat->title }}</a>

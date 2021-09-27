@@ -37,11 +37,18 @@ class Authenticate implements AuthenticatesRequests
      *
      * @throws \Illuminate\Auth\AuthenticationException
      */
-    public function handle($request, Closure $next, ...$guards)
+    public function handle($request, Closure $next, $role, ...$guards)
     {
         $this->authenticate($request, $guards);
 
-        return $next($request);
+        if ($this->auth->user()->roles[0]->name == $role)
+            return $next($request);
+
+        if ($role == "agent")
+            return redirect(route('adminHome'));
+        else
+            return redirect(route('home'));
+
     }
 
     /**
